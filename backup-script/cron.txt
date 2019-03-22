@@ -1,0 +1,12 @@
+##执行gitlab备份命令
+0 0,12 * * * /bin/bash -x /data/gitlab/backups/gitlab_backup.sh > /dev/null 2>&1
+
+##gitlab备份同步任务
+0  2  *   *  *   rsync -avzP  root@192.168.45.161::gitlab_backups /opt/rsync_backups/gitlab_backup/ >/var/log/script/rsync.log 2>&1
+
+##删除30天以前的gitlab备份文件
+0  0  *   *  *   /bin/bash -x /opt/script/clean_gitlab_backup.sh > /dev/null 2>&1
+
+
+
+
